@@ -3,12 +3,53 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use OpenApi\Attributes as OA;
 use App\Models\Persona;
 use Exception;
 
 class PersonaController extends Controller
 {
     //
+    /**
+     * @OA\Get(
+     *          path="/api/obtenerpersona/{id},
+     *          tags={"Persona"},
+     *          summary="Obtener un registro de persona",
+     *          description="Con este EndPoint puede obtener los detalles de un registro de persona",
+     *          security={
+     *              {"bearer_token":{}}
+     *          },
+     *          @OA\Parameter(
+     *              name="id",
+     *              in="path",
+     *              description="Buscar por ID de persona",
+     *              required=true
+     *          ),
+     *          @OA\Parameter(
+     *              name=Accept-Language",
+     *              in="header",
+     *              description="Parámetro de idioma, aplicar RFC2616",
+     *              @OA\scheme(
+     *                  type="string"
+     *                  )
+     *              ),
+     *              @OA\Response(response="200",description="No hay error, se devolvieron los datos correctamente",
+     *                  @OA\JsonContent(type="object",
+     *                      @OA\Property(
+     *                          property="id_persona",
+     *                          type="integer",
+     *                          example="1"
+     *                  ),
+     *                  @OA\Property(
+     *                          property="nombres",
+     *                          type="string",
+     *                          example="Briam Navarro"
+     *                  ),
+     *          )
+     * )
+     */
+
+
     public function obtener($id){
         $datos = Persona::where("id_persona",$id)->get();
         if($datos->isNotEmpty()){
