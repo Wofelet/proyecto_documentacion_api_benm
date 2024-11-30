@@ -43,9 +43,49 @@ class PersonaController extends Controller
      *                  @OA\Property(
      *                          property="nombres",
      *                          type="string",
-     *                          example="Briam Navarro"
+     *                          example="Briam Ernesto"
      *                  ),
+     *                  @OA\Property(
+     *                  property="apellidos",
+     *                  type="string",
+     *                  example="Navarro Menjivar"
+     *              ),
+     *              @OA\Property(
+     *                  property="fechanacimiento",
+     *                  type="string",
+     *                  example="2002-05-13"
+     *              ),
+     *              @OA\Property(
+     *                  property="direccion",
+     *                  type="string",
+     *                  example="San Salvador, El Salvador"
+     *              ),
      *          )
+     *      ),
+     *      @OA\Response(response="404", description="No se encontró la ruta del EndPoint",
+     *          @OA\JsonContent(type="object",
+     *              @OA\Property(
+     *                  property="success",
+     *                  type="boolean",
+     *                  example="false"
+     *              ),
+     *              @OA\Property(
+     *                  property="msg",
+     *                  type="string",
+     *                  example=""
+     *              ),
+     *              @OA\Property(
+     *                  property="error",
+     *                  type="string",
+     *                  example="No se encontraron datos"
+     *              ),
+     *              @OA\Property(
+     *                  property="cant",
+     *                  type="integer",
+     *                  example="0"
+     *              )
+     *          )
+     *      )
      * )
      */
 
@@ -58,6 +98,53 @@ class PersonaController extends Controller
            return response()->json(["success"=>false,"msg"=>"","error"=>"no se encontraron datos","cant"=>0],404);
         } 
     }
+
+    /**
+ * @OA\Post(
+ *     path="/api/crearpersona",
+ *     tags={"Persona"},
+ *     summary="Crear una nueva persona",
+ *     description="Crear una persona de acuerdo a parámetros específicos",
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\JsonContent(
+ *             required={"nom","ape","fnac","direcc"},
+ *             @OA\Property(property="nom", type="string", example="Jaime Jeovanny"),
+ *             @OA\Property(property="ape", type="string", example="Cortez Flores"),
+ *			   @OA\Property(property="fnac", type="string", example="1985-09-02"),
+ *			   @OA\Property(property="direcc", type="string", example="San Salvador, El Salvador")
+ *         ),
+ *     ),
+  *     @OA\Response(response="200", description="No hay error, se han guardado los datos correctamente",
+ *          @OA\JsonContent(type="object",
+ *               @OA\Property(
+ *                    property="success",
+ *                    type="boolean",
+ *                    example="true"
+ *               ),
+ *               @OA\Property(
+ *                    property="msg",
+ *                    type="string",
+ *                    example="Datos guardados satisfactoriamente"
+ *               ),
+ *               @OA\Property(
+ *                    property="error",
+ *                    type="string",
+ *                    example=""
+ *               ),
+  *               @OA\Property(
+ *                    property="cant",
+ *                    type="integer",
+ *                    example="1"
+ *               )
+ *          )
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Error en la petición"
+ *     )
+ * )
+ */
 
 
     public function guardar(Request $request){
